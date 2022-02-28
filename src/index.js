@@ -50,11 +50,14 @@ const createWindow = () => {
 };
 
 let settingsMenu = null;
+let cursorVisible = true;
 
 function CreateOptionsMenu() {
     settingsMenu = new BrowserWindow({
-        width: 400,
-        height: 500,
+        width: 400, minWidth: 400,
+        height: 500, minHeight: 500,
+        x: 100,
+        y: 50,
         frame: false,
         transparent: true,
         alwaysOnTop: true,
@@ -75,6 +78,11 @@ function CreateOptionsMenu() {
             settingsMenu = null;
         }
     });
+
+    ipc.on("app/togglecursor", () => {
+        cursorVisible = !cursorVisible;
+        mainWindow.webContents.send('app/setcursordisplay', cursorVisible);
+    });
 }
 
 app.on('ready', async () => {
@@ -92,8 +100,6 @@ app.on('ready', async () => {
     if (!settingsMenuKey) {
         console.log('registration failed')
     }
-
-    let cursorVisible = true;
 
     const toggleKey = globalShortcut.register('CommandOrControl+Shift+F12', () => {
         cursorVisible = !cursorVisible;
