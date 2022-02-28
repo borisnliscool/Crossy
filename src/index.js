@@ -60,7 +60,7 @@ function CreateOptionsMenu() {
         y: 50,
         frame: false,
         transparent: true,
-        alwaysOnTop: true,
+        // alwaysOnTop: true,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -74,10 +74,7 @@ function CreateOptionsMenu() {
     settingsMenu.setIcon(path.join(__dirname, '/imgs/crossy-icon.png'));
 
     ipc.on("app/close", () => {
-        if (settingsMenu) {
-            settingsMenu.close();
-            settingsMenu = null;
-        }
+        app.quit();
     });
 
     ipc.on("app/togglecursor", () => {
@@ -88,18 +85,18 @@ function CreateOptionsMenu() {
     ipc.on("app/setcrosshaircolor", (e, value) => {
         mainWindow.webContents.send('app/setcrosshaircolor', value);
     });
+
+    ipc.on("app/toggleSettingsMenu", (e, value) => {
+        value ? settingsMenu.restore() : settingsMenu.minimize();
+    });
 }
 
 app.on('ready', async () => {
     await createWindow();
+    await CreateOptionsMenu();
 
     const settingsMenuKey = globalShortcut.register('CommandOrControl+Shift+F11', () => {
-        if (settingsMenu) {
-            settingsMenu.close();
-            settingsMenu = null;
-        } else {
-            CreateOptionsMenu();
-        }
+        settingsMenu.webContents.send('app/toggle');
     });
 
     if (!settingsMenuKey) {
@@ -125,5 +122,6 @@ app.on('window-all-closed', () => {
 app.on('activate', async () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         await createWindow();
+        await CreateOptionsMenu();
     }
 });
