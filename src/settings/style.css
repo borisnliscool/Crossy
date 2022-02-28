@@ -3,7 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     color: purple;
-    font-family: sans-serif;
+    font-family: 'Consolas', sans-serif;
 }
 
 .wrapper {
@@ -27,18 +27,21 @@ header {
 }
 
 header h1 {
-    padding: 10px;
-    font-size: 1.5em;
-    font-weight: bold;
+    padding: 10px 15px;
+    font-size: 25px;
+    font-weight: 500;
     margin: 0;
 }
 
 header div {
-    margin: 0 15px;
     width: 15px;
     aspect-ratio: 1;
-    border-radius: 100%;
+    margin: 0 15px;
+}
+
+#close {
     background: red;
+    border-radius: 100%;
     cursor: pointer;
     -webkit-app-region: no-drag;
 }

@@ -52,7 +52,9 @@ let settingsMenu = null;
 function CreateOptionsMenu() {
     settingsMenu = new BrowserWindow({
         width: 400,
-        height: 600,
+        height: 500,
+        x: 25,
+        y: 25,
         frame: false,
         transparent: true,
         webPreferences: {
@@ -68,6 +70,7 @@ function CreateOptionsMenu() {
 
     ipc.on("app/close", () => {
         settingsMenu.close();
+        settingsMenu = null;
     });
 }
 
