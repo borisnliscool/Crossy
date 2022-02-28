@@ -1,4 +1,11 @@
-const {app, BrowserWindow, ipcMain, Menu, MenuItem} = require('electron');
+const electron = require('electron')
+const {
+    app,
+    BrowserWindow,
+    ipcMain,
+    Menu,
+    MenuItem
+} = electron;
 const path = require('path');
 const ipc = ipcMain;
 const fs = require('fs');
@@ -8,22 +15,22 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = async isShadowWindow => {
+    const {
+        width,
+        height
+    } = electron.screen.getPrimaryDisplay().workAreaSize
+
     const mainWindow = new BrowserWindow({
-        acceptFirstMouse: true,
-        alwaysOnTop: true,
-        frame: false,
-        hasShadow: false,
-        closable: true,
-        fullscreenable: false,
-        maximizable: false,
-        minimizable: false,
-        resizable: false,
-        skipTaskbar: false,
-        transparent: true,
         useContentSize: true,
-        // show: false,
-        width: 60,
-        height: 60,
+        width: width,
+        height: height,
+        frame: false,
+        transparent: true,
+        center: true,
+        alwaysOnTop: true,
+        acceptFirstMouse: true,
+        autoHideMenuBar: true,
+        hasShadow: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -32,9 +39,9 @@ const createWindow = async isShadowWindow => {
             devTools: false,
         },
     });
-    
-    mainWindow.setAlwaysOnTop(true, 'screen');
+
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
+    mainWindow.setIgnoreMouseEvents(true);
     //   mainWindow.setIcon(path.join(__dirname, 'imgs/icon.ico'));
 
     ipc.on("app/close", () => {
