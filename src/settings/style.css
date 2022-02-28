@@ -40,7 +40,8 @@ header div {
 }
 
 #close {
-    background: red;
+    /* background: red; */
+    color: red;
     border-radius: 100%;
     cursor: pointer;
     -webkit-app-region: no-drag;
