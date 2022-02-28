@@ -10,3 +10,8 @@ const toggleCursor = document.querySelector('#togglecursor');
 toggleCursor.onclick = () => {
     ipc.send("app/togglecursor");
 }
+
+const crosshairColor = document.querySelector('#crosshaircolor');
+crosshairColor.onchange = () => {
+    ipc.send("app/setcrosshaircolor", crosshairColor.value);
+}

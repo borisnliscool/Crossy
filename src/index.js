@@ -84,6 +84,10 @@ function CreateOptionsMenu() {
         cursorVisible = !cursorVisible;
         mainWindow.webContents.send('app/setcursordisplay', cursorVisible);
     });
+
+    ipc.on("app/setcrosshaircolor", (e, value) => {
+        mainWindow.webContents.send('app/setcrosshaircolor', value);
+    });
 }
 
 app.on('ready', async () => {
