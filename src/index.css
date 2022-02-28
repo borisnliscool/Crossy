@@ -1,0 +1,28 @@
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.crosshair {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crosshair-inner {
+    width: 4px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
