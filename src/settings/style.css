@@ -1,0 +1,44 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: purple;
+    font-family: sans-serif;
+}
+
+.wrapper {
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    border-radius: 10px;
+    -webkit-app-region: no-drag;
+    overflow: hidden;
+}
+
+header {
+    width: 100%;
+    -webkit-app-region: drag;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    padding: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0;
+}
+
+header div {
+    margin: 0 15px;
+    width: 15px;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    background: red;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+}

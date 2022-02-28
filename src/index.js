@@ -1,11 +1,13 @@
-const electron = require('electron')
+const electron = require('electron');
 const {
     app,
     BrowserWindow,
     ipcMain,
     Menu,
-    MenuItem
+    MenuItem,
+    globalShortcut
 } = electron;
+
 const path = require('path');
 const ipc = ipcMain;
 const fs = require('fs');
@@ -14,7 +16,7 @@ if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
-const createWindow = async isShadowWindow => {
+const createWindow = () => {
     const {
         width,
         height
@@ -29,8 +31,8 @@ const createWindow = async isShadowWindow => {
         center: true,
         alwaysOnTop: true,
         acceptFirstMouse: true,
-        autoHideMenuBar: true,
         hasShadow: false,
+        focusable: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -43,15 +45,52 @@ const createWindow = async isShadowWindow => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
     mainWindow.setIgnoreMouseEvents(true);
     //   mainWindow.setIcon(path.join(__dirname, 'imgs/icon.ico'));
+};
+
+let settingsMenu = null;
+
+function CreateOptionsMenu() {
+    settingsMenu = new BrowserWindow({
+        width: 400,
+        height: 600,
+        frame: false,
+        transparent: true,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
+            preload: path.join(__dirname, 'preload.js'),
+            devTools: false,
+        },
+    });
+
+    settingsMenu.loadFile(path.join(__dirname, '/settings/index.html'));
 
     ipc.on("app/close", () => {
-        app.quit();
+        settingsMenu.close();
     });
-};
+}
 
 app.on('ready', async () => {
     await createWindow();
+
+    const ret = globalShortcut.register('CommandOrControl+Shift+F11', () => {
+        if (settingsMenu) {
+            settingsMenu.close();
+            settingsMenu = null;
+        } else {
+            CreateOptionsMenu();
+        }
+    });
+
+    if (!ret) {
+        console.log('registration failed')
+    }
 });
+
+app.on('will-quit', () => {
+    globalShortcut.unregisterAll()
+})
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
