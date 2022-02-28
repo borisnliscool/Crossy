@@ -16,13 +16,15 @@ if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
+let mainWindow = null;
+
 const createWindow = () => {
     const {
         width,
         height
     } = electron.screen.getPrimaryDisplay().workAreaSize
 
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         useContentSize: true,
         width: width,
         height: height,
@@ -53,10 +55,9 @@ function CreateOptionsMenu() {
     settingsMenu = new BrowserWindow({
         width: 400,
         height: 500,
-        x: 25,
-        y: 25,
         frame: false,
         transparent: true,
+        alwaysOnTop: true,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -79,7 +80,7 @@ function CreateOptionsMenu() {
 app.on('ready', async () => {
     await createWindow();
 
-    const ret = globalShortcut.register('CommandOrControl+Shift+F11', () => {
+    const settingsMenuKey = globalShortcut.register('CommandOrControl+Shift+F11', () => {
         if (settingsMenu) {
             settingsMenu.close();
             settingsMenu = null;
@@ -88,9 +89,16 @@ app.on('ready', async () => {
         }
     });
 
-    if (!ret) {
+    if (!settingsMenuKey) {
         console.log('registration failed')
     }
+
+    let cursorVisible = true;
+
+    const toggleKey = globalShortcut.register('CommandOrControl+Shift+F12', () => {
+        cursorVisible = !cursorVisible;
+        mainWindow.webContents.send('app/setcursordisplay', cursorVisible);
+    });
 });
 
 app.on('will-quit', () => {

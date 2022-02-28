@@ -16,4 +16,10 @@
     top: 51.5%;
     left: 50%;
     transform: translateX(-50%);
+
+    display: none;
+}
+
+.crosshair-active {
+    display: block;
 }

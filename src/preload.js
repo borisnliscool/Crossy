@@ -1,3 +1,3 @@
 window.addEventListener('DOMContentLoaded', () => {
-    // Does nothing yet
+    // does nothing for now
 })
