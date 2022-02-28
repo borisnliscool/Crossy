@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu, MenuItem} = require('electron');
 const path = require('path');
 const ipc = ipcMain;
 const fs = require('fs');
@@ -7,16 +7,29 @@ if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
-const createWindow = () => {
+const createWindow = async isShadowWindow => {
     const mainWindow = new BrowserWindow({
-        transparent: true,
-        autoHideMenuBar: true,
+        acceptFirstMouse: true,
+        alwaysOnTop: true,
         frame: false,
+        hasShadow: false,
+        closable: true,
+        fullscreenable: false,
+        maximizable: false,
+        minimizable: false,
+        resizable: false,
+        skipTaskbar: false,
+        transparent: true,
+        useContentSize: true,
+        // show: false,
+        width: 60,
+        height: 60,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
             enableRemoteModule: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            devTools: false,
         },
     });
     
@@ -29,7 +42,9 @@ const createWindow = () => {
     });
 };
 
-app.on('ready', createWindow);
+app.on('ready', async () => {
+    await createWindow();
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -37,8 +52,8 @@ app.on('window-all-closed', () => {
     }
 });
 
-app.on('activate', () => {
+app.on('activate', async () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
+        await createWindow();
     }
 });
