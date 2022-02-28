@@ -46,7 +46,7 @@ const createWindow = () => {
 
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
     mainWindow.setIgnoreMouseEvents(true);
-    mainWindow.setIcon(path.join(__dirname, '/imgs/crossy-logo.png'));
+    mainWindow.setIcon(path.join(__dirname, '/imgs/crossy-icon.png'));
 };
 
 let settingsMenu = null;
@@ -71,7 +71,7 @@ function CreateOptionsMenu() {
     });
 
     settingsMenu.loadFile(path.join(__dirname, '/settings/index.html'));
-    settingsMenu.setIcon(path.join(__dirname, '/imgs/crossy-logo.png'));
+    settingsMenu.setIcon(path.join(__dirname, '/imgs/crossy-icon.png'));
 
     ipc.on("app/close", () => {
         if (settingsMenu) {
