@@ -69,8 +69,10 @@ function CreateOptionsMenu() {
     settingsMenu.loadFile(path.join(__dirname, '/settings/index.html'));
 
     ipc.on("app/close", () => {
-        settingsMenu.close();
-        settingsMenu = null;
+        if (settingsMenu) {
+            settingsMenu.close();
+            settingsMenu = null;
+        }
     });
 }
 
