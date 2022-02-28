@@ -2,7 +2,7 @@
   "name": "crossy",
   "productName": "crossy",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Cross is an open source, easy to use and fully custimizable crosshair for any game / application.",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -45,6 +45,7 @@
     }
   },
   "dependencies": {
+    "electron-forge": "^5.2.4",
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
