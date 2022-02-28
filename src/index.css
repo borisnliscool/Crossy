@@ -8,7 +8,7 @@
 .crosshair-inner {
     width: 4px;
     height: 4px;
-    background-color: white;
+    background: lime;
     border-radius: 50%;
     border: 2px solid black;
 
