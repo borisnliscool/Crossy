@@ -39,6 +39,20 @@ header div {
     margin: 0 15px;
 }
 
+header img {
+    width: 30px;
+    aspect-ratio: 1;
+    margin: 0 15px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    opacity: 0.25;
+}
+
 #close {
     /* background: red; */
     color: red;
