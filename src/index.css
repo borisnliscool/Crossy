@@ -52,7 +52,6 @@
     transform: translate(-50%, -50%) rotate(270deg);
 }
 
-
 .crosshair-lines div::after {
     content: '';
     position: absolute;
