@@ -89,6 +89,14 @@ function CreateOptionsMenu() {
     ipc.on("app/toggleSettingsMenu", (e, value) => {
         value ? settingsMenu.restore() : settingsMenu.minimize();
     });
+
+    ipc.on("app/setlines", (e, value) => {
+        mainWindow.webContents.send('app/setlines', value);
+    });
+
+    ipc.on("app/setdot", (e, value) => {
+        mainWindow.webContents.send('app/setdot', value);
+    });
 }
 
 app.on('ready', async () => {

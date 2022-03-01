@@ -30,3 +30,14 @@ const crosshairColor = document.querySelector('#crosshaircolor');
 crosshairColor.onchange = () => {
     ipcRenderer.send("app/setcrosshaircolor", crosshairColor.value);
 }
+
+const linesCheckbox = document.querySelector('#lines_checkbox');
+const dotCheckbox = document.querySelector('#dot_checkbox');
+
+linesCheckbox.onchange = () => {
+    ipcRenderer.send("app/setlines", linesCheckbox.checked);
+}
+
+dotCheckbox.onchange = () => {
+    ipcRenderer.send("app/setdot", dotCheckbox.checked);
+}
