@@ -12,10 +12,6 @@ const path = require('path');
 const ipc = ipcMain;
 const fs = require('fs');
 
-if (require('electron-squirrel-startup')) {
-    app.quit();
-}
-
 let mainWindow = null;
 
 const createWindow = () => {
