@@ -1,60 +1,84 @@
 {
-  "name": "crossy",
-  "productName": "crossy",
-  "version": "1.0.0",
-  "description": "Cross is an open source, easy to use and fully custimizable crosshair for any game / application.",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
-  },
-  "keywords": [],
-  "author": {
-    "name": "borisnliscool",
-    "email": "60477582+borisnliscool@users.noreply.github.com"
-  },
-  "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "crossy"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
+    "name": "crossy",
+    "productName": "Crossy",
+    "version": "1.0.0",
+    "description": "Cross is an open source, easy to use and fully custimizable crosshair for any game / application.",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "publish": "electron-forge publish",
+        "lint": "echo \"No linting configured\"",
+        "build": "electron-builder"
+    },
+    "keywords": [],
+    "author": {
+        "name": "borisnliscool",
+        "email": "60477582+borisnliscool@users.noreply.github.com"
+    },
+    "license": "MIT",
+    "config": {
+        "forge": {
+            "packagerConfig": {},
+            "makers": [
+                {
+                    "name": "@electron-forge/maker-squirrel",
+                    "config": {
+                        "name": "crossy"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-zip",
+                    "platforms": [
+                        "darwin"
+                    ]
+                },
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-rpm",
+                    "config": {}
+                }
+            ]
         }
-      ]
+    },
+    "build": {
+        "appId": "crossy",
+        "productName": "Crossy",
+        "win": {
+            "target": [
+                "nsis"
+            ],
+            "icon": "./src/imgs/crossy-icon.ico"
+        },
+        "nsis": {
+            "oneClick": false,
+            "installerIcon": "./src/imgs/crossy-icon.ico",
+            "uninstallerIcon": "./src/imgs/crossy-icon.ico",
+            "uninstallDisplayName": "Uninstall Crossy",
+            "license": "./LICENSE",
+            "allowToChangeInstallationDirectory": true,
+            "deleteAppDataOnUninstall": true,
+            "runAfterFinish": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "Crossy"
+        }
+    },
+    "dependencies": {
+        "electron-forge": "^5.2.4"
+    },
+    "devDependencies": {
+        "@electron-forge/cli": "^6.0.0-beta.63",
+        "@electron-forge/maker-deb": "^6.0.0-beta.63",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+        "@electron-forge/maker-zip": "^6.0.0-beta.63",
+        "electron": "17.1.0",
+        "electron-builder": "^22.14.13",
+        "electron-squirrel-startup": "^1.0.0"
     }
-  },
-  "dependencies": {
-    "electron-forge": "^5.2.4",
-    "electron-squirrel-startup": "^1.0.0"
-  },
-  "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.63",
-    "@electron-forge/maker-deb": "^6.0.0-beta.63",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "17.1.0",
-    "electron-build": "^0.0.3"
-  }
 }
