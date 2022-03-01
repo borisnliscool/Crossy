@@ -5,19 +5,78 @@
     margin: 0;
 }
 
-.crosshair-inner {
-    width: 4px;
-    height: 4px;
-    background: lime;
-    border-radius: 50%;
-    border: 2px solid black;
+:root {
+    --main-bg-color: lime;
+}
 
+.crosshair-inner {
     position: fixed;
     top: 51.5%;
     left: 50%;
     transform: translateX(-50%);
-
     display: none;
+    /* scale of the entire thing */
+    transform: scale(1.0);
+}
+
+.crosshair-lines {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    aspect-ratio: 1;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.crosshair-lines div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* distance from center */
+    width: 16px;
+    aspect-ratio: 1;
+}
+
+.crosshair-lines div:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.crosshair-lines div:nth-child(2) {
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.crosshair-lines div:nth-child(3) {
+    transform: translate(-50%, -50%) rotate(270deg);
+}
+
+
+.crosshair-lines div::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 2px solid black;
+    background-color: var(--main-bg-color);
+    /* width of line */
+    width: 2px;
+    /* length of line */
+    height: 14px;
+}
+
+.crosshair-dot {
+    width: 4px;
+    aspect-ratio: 1;
+    background-color: var(--main-bg-color);
+    border-radius: 50%;
+    border: 2px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .crosshair-active {

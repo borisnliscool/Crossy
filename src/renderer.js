@@ -7,5 +7,6 @@ ipcRenderer.on("app/setcursordisplay", (e, value) => {
 });
 
 ipcRenderer.on("app/setcrosshaircolor", (e, value) => {
-    cursor.style.backgroundColor = value;
+    let root = document.documentElement;
+    root.style.setProperty('--main-bg-color', value);
 });
