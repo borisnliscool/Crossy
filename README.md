@@ -6,7 +6,7 @@
     <img src="https://github.com/borisnliscool/crossy/blob/main/src/imgs/crossy-logo.png" alt="Logo">
   </a>
 
-  <h3 align="center">Crossy</h3>
+<!--   <h3 align="center">Crossy</h3> -->
 
   <p align="center">
     Easy to use and custimizable crosshair for any application
