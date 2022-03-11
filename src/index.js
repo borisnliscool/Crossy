@@ -43,10 +43,34 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
     mainWindow.setIgnoreMouseEvents(true);
     mainWindow.setIcon(path.join(__dirname, '/imgs/crossy-icon.png'));
+
+    ipc.on('app/ready', () => {
+        console.log('app/ready');
+        LoadSettings(mainWindow);
+    });
 };
 
 let settingsMenu = null;
 let cursorVisible = true;
+
+function SaveSetting(setting, value) {
+    const settings = fs.readFileSync(path.join(__dirname, 'settings/settings.json'), 'utf8');
+    const settingsJSON = JSON.parse(settings);
+    settingsJSON[setting] = value;
+    fs.writeFileSync(path.join(__dirname, 'settings/settings.json'), JSON.stringify(settingsJSON));
+}
+
+function LoadSettings(window) {
+    const settings = fs.readFileSync(path.join(__dirname, 'settings/settings.json'), 'utf8');
+    if (settings) {
+        const settingsJSON = JSON.parse(settings);
+
+        console.log(settingsJSON);
+        window.webContents.send('app/setcrosshaircolor', settingsJSON.crosshairColor);
+        window.webContents.send('app/setlines', settingsJSON.lines);
+        window.webContents.send('app/setdot', settingsJSON.dot);
+    }
+}
 
 function CreateOptionsMenu() {
     settingsMenu = new BrowserWindow({
@@ -78,20 +102,23 @@ function CreateOptionsMenu() {
         mainWindow.webContents.send('app/setcursordisplay', cursorVisible);
     });
 
-    ipc.on("app/setcrosshaircolor", (e, value) => {
-        mainWindow.webContents.send('app/setcrosshaircolor', value);
-    });
-
     ipc.on("app/toggleSettingsMenu", (e, value) => {
         value ? settingsMenu.restore() : settingsMenu.minimize();
     });
 
+    ipc.on("app/setcrosshaircolor", (e, value) => {
+        mainWindow.webContents.send('app/setcrosshaircolor', value);
+        SaveSetting('crosshairColor', value);
+    });
+
     ipc.on("app/setlines", (e, value) => {
         mainWindow.webContents.send('app/setlines', value);
+        SaveSetting('lines', value);
     });
 
     ipc.on("app/setdot", (e, value) => {
         mainWindow.webContents.send('app/setdot', value);
+        SaveSetting('dot', value);
     });
 }
 

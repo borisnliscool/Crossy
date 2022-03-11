@@ -20,3 +20,5 @@ const dot = document.querySelector('.crosshair-dot');
 ipcRenderer.on("app/setdot", (e, value) => {
     dot.style.display = value ? "block" : "none";
 });
+
+ipcRenderer.send('app/ready');
