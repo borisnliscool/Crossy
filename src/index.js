@@ -11,6 +11,7 @@ const {
 const path = require('path');
 const ipc = ipcMain;
 const fs = require('fs');
+const storage = require('electron-json-storage');
 
 let mainWindow = null;
 
@@ -43,33 +44,24 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
     mainWindow.setIgnoreMouseEvents(true);
     mainWindow.setIcon(path.join(__dirname, '/imgs/crossy-icon.png'));
-
-    ipc.on('app/ready', () => {
-        console.log('app/ready');
-        LoadSettings(mainWindow);
-    });
 };
 
 let settingsMenu = null;
 let cursorVisible = true;
 
 function SaveSetting(setting, value) {
-    const settings = fs.readFileSync(path.join(__dirname, 'settings/settings.json'), 'utf8');
-    const settingsJSON = JSON.parse(settings);
-    settingsJSON[setting] = value;
-    fs.writeFileSync(path.join(__dirname, 'settings/settings.json'), JSON.stringify(settingsJSON));
+    storage.set(setting, value, function(e) {
+        if (e) throw e;
+    });
 }
 
-function LoadSettings(window) {
-    const settings = fs.readFileSync(path.join(__dirname, 'settings/settings.json'), 'utf8');
-    if (settings) {
-        const settingsJSON = JSON.parse(settings);
-
-        console.log(settingsJSON);
-        window.webContents.send('app/setcrosshaircolor', settingsJSON.crosshairColor);
-        window.webContents.send('app/setlines', settingsJSON.lines);
-        window.webContents.send('app/setdot', settingsJSON.dot);
-    }
+function LoadSettings() {
+    storage.getAll(function (e, data) {
+        if (e) throw e;
+        mainWindow.webContents.send('app/setcrosshaircolor', data.crosshairColor);
+        mainWindow.webContents.send('app/setlines', data.lines);
+        mainWindow.webContents.send('app/setdot', data.dot);
+    });
 }
 
 function CreateOptionsMenu() {
@@ -86,7 +78,7 @@ function CreateOptionsMenu() {
             contextIsolation: false,
             enableRemoteModule: true,
             preload: path.join(__dirname, 'preload.js'),
-            devTools: false,
+            // devTools: false,
         },
     });
 
@@ -119,6 +111,10 @@ function CreateOptionsMenu() {
     ipc.on("app/setdot", (e, value) => {
         mainWindow.webContents.send('app/setdot', value);
         SaveSetting('dot', value);
+    });
+
+    mainWindow.webContents.on('dom-ready', () => {
+        LoadSettings();
     });
 }
 
