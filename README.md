@@ -100,6 +100,7 @@ Thanks to everyone/everything listed bellow.
 
 * [Electron Forge](https://www.electronforge.io/)
 * [Electron Builder](https://www.electron.build/)
+* [Electron JSON Storage](https://github.com/electron-userland/electron-json-storage)
 * [Choose an Open Source License](https://choosealicense.com)
 * [Best README Template](https://github.com/othneildrew/Best-README-Template)
 
