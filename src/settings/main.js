@@ -1,6 +1,13 @@
 const { ipcRenderer } = require('electron');
 const wrapper = document.querySelector('.wrapper');
 
+const linesCheckbox = document.querySelector('#lines_checkbox');
+const dotCheckbox = document.querySelector('#dot_checkbox');
+const close = document.querySelector('#close');
+const minimize = document.querySelector('#minimize');
+const crosshairColor = document.querySelector('#crosshaircolor');
+const toggleCursor = document.querySelector('#togglecursor');
+
 let isMenuOpen = true;
 function ToggleMenu(value = !isMenuOpen) {
     isMenuOpen = value;
@@ -11,28 +18,33 @@ ipcRenderer.on("app/toggle", (e, value) => {
     ToggleMenu(value);
 });
 
-const close = document.querySelector('#close');
+ipcRenderer.on("app/setcrosshaircolor", (e, value) => {
+    crosshairColor.value = value; 
+});
+
+ipcRenderer.on("app/setlines", (e, value) => {
+    linesCheckbox.checked = value; 
+});
+
+ipcRenderer.on("app/setdot", (e, value) => {
+    dotCheckbox.checked = value; 
+});
+
 close.addEventListener('click', () => {
     ipcRenderer.send('app/close');
 });
 
-const minimize = document.querySelector('#minimize');
 minimize.addEventListener('click', () => {
     ToggleMenu(false);
 });
 
-const toggleCursor = document.querySelector('#togglecursor');
 toggleCursor.onclick = () => {
     ipcRenderer.send("app/togglecursor");
 }
 
-const crosshairColor = document.querySelector('#crosshaircolor');
 crosshairColor.onchange = () => {
     ipcRenderer.send("app/setcrosshaircolor", crosshairColor.value);
 }
-
-const linesCheckbox = document.querySelector('#lines_checkbox');
-const dotCheckbox = document.querySelector('#dot_checkbox');
 
 linesCheckbox.onchange = () => {
     ipcRenderer.send("app/setlines", linesCheckbox.checked);

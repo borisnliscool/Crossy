@@ -61,6 +61,10 @@ function LoadSettings() {
         mainWindow.webContents.send('app/setcrosshaircolor', data.crosshairColor);
         mainWindow.webContents.send('app/setlines', data.lines);
         mainWindow.webContents.send('app/setdot', data.dot);
+
+        settingsMenu.webContents.send('app/setcrosshaircolor', data.crosshairColor);
+        settingsMenu.webContents.send('app/setlines', data.lines);
+        settingsMenu.webContents.send('app/setdot', data.dot);
     });
 }
 
