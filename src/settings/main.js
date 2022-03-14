@@ -7,6 +7,7 @@ const close = document.querySelector('#close');
 const minimize = document.querySelector('#minimize');
 const crosshairColor = document.querySelector('#crosshaircolor');
 const toggleCursor = document.querySelector('#togglecursor');
+const bringToTop = document.querySelector('#bringtotop');
 
 let isMenuOpen = true;
 function ToggleMenu(value = !isMenuOpen) {
@@ -40,6 +41,10 @@ minimize.addEventListener('click', () => {
 
 toggleCursor.onclick = () => {
     ipcRenderer.send("app/togglecursor");
+}
+
+bringToTop.onclick = () => {
+    ipcRenderer.send("app/bringtotop");
 }
 
 crosshairColor.onchange = () => {

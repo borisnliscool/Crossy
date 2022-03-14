@@ -98,6 +98,12 @@ function CreateOptionsMenu() {
         mainWindow.webContents.send('app/setcursordisplay', cursorVisible);
     });
 
+    ipc.on("app/bringtotop", () => {
+        mainWindow.hide();
+        mainWindow.show();
+        mainWindow.focus();
+    });
+
     ipc.on("app/toggleSettingsMenu", (e, value) => {
         value ? settingsMenu.restore() : settingsMenu.minimize();
     });
