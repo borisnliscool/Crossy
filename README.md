@@ -70,6 +70,7 @@ npm run build
 - [x] Keybind for toggeling the crosshair
 - [x] Basic setting menu
 - [x] Changable colours
+- [x] Saving Settings
 - [ ] Changable size
 - [ ] Changable image
 - [ ] Changeble outer lines
