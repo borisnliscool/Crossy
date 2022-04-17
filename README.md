@@ -15,7 +15,7 @@
     ·
     <a href="https://github.com/borisnliscool/crossy/issues">Request Feature</a>
     · 
-    <a href="https://discord.gg/38cKmVt">Join the Discord</a>
+    <a href="https://discord.gg/38cKmVt">Join my Discord</a>
   </p>
 </div>
 
